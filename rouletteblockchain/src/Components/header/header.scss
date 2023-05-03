@@ -1,0 +1,54 @@
+.header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 50px;
+    padding: 0px 20px;
+    background-color: black;
+
+    label {
+        color: white;
+    }
+
+    .user {
+        position: relative;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        width: 200px;
+        height: 35px;
+        padding: 0px 1px;
+        background-color: black;
+        border-radius: 100px;
+        border: 1px solid white;
+        background-color: #FFFFFF80;
+
+        .avatar {
+            position: absolute;
+            width: 35px;
+            height: 35px;
+            border-radius: 100px;
+            background-color: red;
+        }
+
+        .money {
+            display: flex;
+            flex-direction: row;
+            justify-content: right;
+            align-items: center;
+            padding: 0px 10px;
+            width: 100%;
+            gap: 10px;
+
+            .amount {
+                color: #FFFFFF;
+            }
+
+            .devise {
+                color: #FFFFFF;
+            }
+        }
+    }
+}

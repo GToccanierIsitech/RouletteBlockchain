@@ -1,0 +1,51 @@
+.roulette {
+    border-spacing: 0;
+
+    td {
+        text-align: center;
+        padding: 10px;
+        border: 1px solid black;
+
+        &.empty {
+            border: none;
+        }
+
+        &.red {
+            background-color: #FF0000;
+
+            &:hover {
+                cursor: pointer;
+                background-color: #FF000060;
+            }
+        }
+
+        &.black {
+            color: white;
+            background-color: #000000;
+
+            &:hover {
+                cursor: pointer;
+                background-color: #00000060;
+            }
+        }
+
+        &.green {
+            background-color: #175117;
+
+            &:hover {
+                cursor: pointer;
+                background-color: #17511760;
+            }
+        }
+
+        &.white {
+            background-color: transparent;
+
+            &:hover {
+                cursor: pointer;
+                background-color: #FFFFFF60;
+            }
+        }
+
+    }
+}

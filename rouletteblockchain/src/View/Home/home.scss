@@ -1,0 +1,16 @@
+.home {
+    height: 100vh;
+    width: 100%;
+    background-image: linear-gradient(to right top, #31312b, #36312c, #383130, #383134, #363338);
+
+    .center {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: calc(100vh - 50px);
+        width: 100%;
+
+    }
+
+}
