@@ -50,8 +50,6 @@ function Home() {
         if (selectedValue !== "") {
             let previousBalance = parseInt(info.balance)
             let removeMoney = parseInt(selectedValue)
-            console.log(removeMoney)
-            console.log(previousBalance)
 
             let newBalance = previousBalance - removeMoney
             setInfo({ balance: newBalance })
