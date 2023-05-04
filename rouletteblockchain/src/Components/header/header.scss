@@ -3,12 +3,13 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    height: 50px;
+    height: 80px;
     padding: 0px 20px;
     background-color: black;
 
     label {
         color: white;
+        font-size: 20px;
     }
 
     .user {
@@ -20,10 +21,6 @@
         width: 200px;
         height: 35px;
         padding: 0px 1px;
-        background-color: black;
-        border-radius: 100px;
-        border: 1px solid white;
-        background-color: #FFFFFF80;
 
         .avatar {
             position: absolute;

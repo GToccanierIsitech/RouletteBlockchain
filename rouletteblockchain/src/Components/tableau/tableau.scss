@@ -3,14 +3,18 @@
 
     td {
         text-align: center;
-        padding: 10px;
-        border: 1px solid black;
+        width: 20px;
+        height: 20px;
+        padding: 15px;
+        border: 1px solid rgb(155, 155, 155);
+        font-size: 20px;
 
         &.empty {
             border: none;
         }
 
         &.red {
+            color: white;
             background-color: #FF0000;
 
             &:hover {
@@ -30,6 +34,7 @@
         }
 
         &.green {
+            color: white;
             background-color: #175117;
 
             &:hover {
@@ -39,6 +44,7 @@
         }
 
         &.white {
+            color: white;
             background-color: transparent;
 
             &:hover {

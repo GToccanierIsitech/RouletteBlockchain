@@ -1,0 +1,31 @@
+.jeton {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    height: 51px;
+    width: 51px;
+    border-radius: 100px;
+    border: 5px dashed white;
+
+    .center {
+        height: 51px;
+        width: 51px;
+        font-size: 20px;
+        border-radius: 100px;
+
+        label {
+            color: white;
+
+            &:hover {
+                cursor: pointer;
+            }
+        }
+
+        &:hover {
+            cursor: pointer;
+            background-color: #FFFFFF60;
+        }
+    }
+}

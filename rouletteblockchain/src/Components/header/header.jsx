@@ -1,15 +1,15 @@
 import './header.scss'
 
-function Header() {
+function Header(props) {
     return (
         <div className='header'>
             <label>Jeu de roulette</label>
             <div className='user'>
-                <div className='avatar'></div>
                 <div className='money'>
-                    <label className='amount'>3400</label>
+                    <label className='amount'>{props.money}</label>
                     <label className='devise'>LNA</label>
                 </div>
+                <div className='avatar'></div>
 
             </div>
         </div>
