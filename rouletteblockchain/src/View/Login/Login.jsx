@@ -94,13 +94,12 @@ function Login() {
                         <>
                             <div className='title1'>
                                 <label className='title'>Bienvenue</label>
-                                <label className='subtitle'>Connecté a l'address : {currentAccountName}</label>
                             </div>
 
                             <div className='value'>
-                                <span>{info.address}</span>
-                                <span>{info.eth} ETH</span>
-                                <span>{info.balance} LNA</span>
+                                <label>Utilisateur connecté : {info.address}</label>
+                                <label>Solde ETH : {info.eth} ETH</label>
+                                <label>Solde LNA : {info.balance} LNA</label>
                             </div>
 
                             <button onClick={GoToGame}>
