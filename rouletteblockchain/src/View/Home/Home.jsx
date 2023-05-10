@@ -6,6 +6,7 @@ import "./home.scss"
 import Jeton from "../../Components/money/Jeton";
 
 import TokenABI from "../../utils/TokenABI.json";
+import ContratABI from "../../utils/ContratABI.json";
 import useAdvancedState from "../../utils/CustomHooks/useAdvencedState";
 import Web3 from "web3";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -14,6 +15,10 @@ import { useNavigate } from "react-router-dom";
 
 const tokenAddress = "0x12aa00da1B8c2f1Aed531BDb8aBA4464953707A8"; // Adresse du contrat du token ERC-20
 const tokenAbi = TokenABI; // Interface de contrat du token ERC-20
+
+const contractAddress = '0x24Ebedf75b3e86766b4f66591cC1918D84ab3bd7';
+const contractAbi = ContratABI;
+const contract = new web3.eth.Contract(contractAbi, contractAddress);
 
 function Home() {
     const [loading, setLoading] = useState(false);
@@ -51,7 +56,9 @@ function Home() {
 
     function handleChangeRoulette(value) {
         if (selectedValue !== "") {
-            if (info.balance > selectedValue) {
+            console.log(info.balance)
+            console.log(selectedValue)
+            if (parseFloat(info.balance) >= parseFloat(selectedValue)) {
                 let previousBalance = parseInt(info.balance)
                 let removeMoney = parseInt(selectedValue)
 
@@ -168,12 +175,18 @@ function Home() {
                     {/* Placement */}
                     {
                         placements.length > 0 ? (
-                            <div className="placements">
-                                Placement :
-                                {showPlacement(placements)}
-                            </div>
+                            <>
+                                <div className="placements">
+                                    Placement :
+                                    {showPlacement(placements)}
+                                </div>
+                                <button className="buttonstart">
+                                    Lancer
+                                </button>
+                            </>
                         ) : (null)
                     }
+
                 </div >
             </div >
         )
