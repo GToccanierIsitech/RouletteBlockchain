@@ -51,17 +51,25 @@ function Home() {
 
     function handleChangeRoulette(value) {
         if (selectedValue !== "") {
-            let previousBalance = parseInt(info.balance)
-            let removeMoney = parseInt(selectedValue)
+            if (info.balance > selectedValue) {
+                let previousBalance = parseInt(info.balance)
+                let removeMoney = parseInt(selectedValue)
 
-            let newBalance = previousBalance - removeMoney
-            setInfo({ balance: newBalance })
-            let _placements = [...placements]
-            _placements.push({
-                value: value,
-                amount: selectedValue
-            })
-            setPlacements(_placements)
+                let newBalance = previousBalance - removeMoney
+                setInfo({ balance: newBalance })
+                let _placements = [...placements]
+                _placements.push({
+                    value: value,
+                    amount: selectedValue
+                })
+                setPlacements(_placements)
+            }
+            else {
+                alert("Vous n'avez pas assez de d'argent pour miser " + selectedValue + " LNA")
+            }
+        }
+        else {
+            alert("Vous n'avez pas séléctionner de jeton")
         }
     }
 
