@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Header from "../../Components/header/header";
 import Roulette from "../../Components/tableau/Roulette";
+import Metamask_icon from '../../Assets/Icon/MetaMask_Fox.png'
 import "./home.scss"
 import Jeton from "../../Components/money/Jeton";
 
@@ -9,6 +10,7 @@ import useAdvancedState from "../../utils/CustomHooks/useAdvencedState";
 import Web3 from "web3";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router-dom";
 
 const tokenAddress = "0x12aa00da1B8c2f1Aed531BDb8aBA4464953707A8"; // Adresse du contrat du token ERC-20
 const tokenAbi = TokenABI; // Interface de contrat du token ERC-20
@@ -46,6 +48,7 @@ function Home() {
         console.log(info.balance)
         setSelectedValue(value)
     }
+
     function handleChangeRoulette(value) {
         if (selectedValue !== "") {
             let previousBalance = parseInt(info.balance)
@@ -71,7 +74,6 @@ function Home() {
                         <label>Case : {_placement.value}</label>
                         <label>{_placement.amount} LNA</label>
                     </div>
-                    <FontAwesomeIcon icon={faTrash} />
                 </div>
             )
         })
@@ -95,13 +97,29 @@ function Home() {
         return result;
     }
 
+    function handleClickDeletePlacement() {
+        let sum = 0;
+
+        for (let i = 0; i < placements.length; i++) {
+            sum += parseInt(placements[i].amount);
+        }
+
+        setInfo({ balance: info.balance + sum })
+
+        setPlacements([])
+    }
+
     return (
-        loading ? (
+        !loading ? (
+            <div className='loading'>
+                <img alt='MetaMask_Fox' src={Metamask_icon} />
+            </div>
+        ) : (
             <div className="home">
                 <Header
                     money={info.balance}
                 />
-                <div className="center">
+                < div className="center" >
                     <Roulette
                         handleChange={handleChangeRoulette}
                     />
@@ -137,17 +155,20 @@ function Home() {
                             selectedValue={selectedValue === "20"}
                             onclick={handleClickJeton}
                         />
+                        <FontAwesomeIcon className="icon" onClick={handleClickDeletePlacement} icon={faTrash} />
                     </div>
                     {/* Placement */}
-                    {placements.length > 0 ? (
-                        <div className="placements">
-                            Placement :
-                            {showPlacement(placements)}
-                        </div>
-                    ) : (null)}
-                </div>
-            </div>
-        ) : (null)
+                    {
+                        placements.length > 0 ? (
+                            <div className="placements">
+                                Placement :
+                                {showPlacement(placements)}
+                            </div>
+                        ) : (null)
+                    }
+                </div >
+            </div >
+        )
 
     );
 }

@@ -51,6 +51,16 @@
             color: white;
         }
 
+        .value {
+            color: white;
+            background-color: #656565;
+            padding: 10px;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
         button {
             display: flex;
             flex-direction: row;

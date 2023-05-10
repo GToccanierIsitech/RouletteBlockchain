@@ -36,12 +36,15 @@ function Login() {
         const address = accounts[0];
         const tokenContract = new window.web3.eth.Contract(tokenAbi, tokenAddress);
         const tokenBalance = await tokenContract.methods.balanceOf(address).call();
+        const balanceInWei = await window.web3.eth.getBalance(address);
         setCurrentAccount(address);
 
         console.log(window.web3)
         setCurrentAccountName(accounts)
         setInfo({
-            balance: tokenBalance
+            address: address,
+            eth: window.web3.utils.fromWei(balanceInWei, 'ether'),
+            balance: window.web3.utils.fromWei(tokenBalance, 'ether')
         })
         setCurrentAccount(window.web3)
         setLoading(true)
@@ -94,8 +97,10 @@ function Login() {
                                 <label className='subtitle'>Connecté a l'address : {currentAccountName}</label>
                             </div>
 
-                            <div>
-                                {window.web3.utils.fromWei(info.balance, "ether")} LNA
+                            <div className='value'>
+                                <span>{info.address}</span>
+                                <span>{info.eth} ETH</span>
+                                <span>{info.balance} LNA</span>
                             </div>
 
                             <button onClick={GoToGame}>

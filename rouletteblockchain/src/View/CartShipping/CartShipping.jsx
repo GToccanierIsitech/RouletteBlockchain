@@ -1,8 +1,12 @@
 import './CartShipping.scss'
 import useAdvancedState from '../../utils/CustomHooks/useAdvencedState'
+import Metamask_icon from '../../Assets/Icon/MetaMask_Fox.png'
 import { CircularProgress, Slider } from '@material-ui/core'
 import { useEffect, useState } from 'react';
 import Web3 from 'web3';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCartShopping, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
 
 function CartShipping() {
     const [loading, setLoading] = useState(false);
@@ -11,6 +15,8 @@ function CartShipping() {
     const [info, setInfo] = useAdvancedState({
         balance: ''
     })
+
+    const navigate = useNavigate()
 
     useEffect(() => {
         getData();
@@ -37,7 +43,7 @@ function CartShipping() {
 
     function getMax(value) {
         console.log(value)
-        let maxLNA = (parseFloat(value) / 0.2) * 1000
+        let maxLNA = (parseFloat(value) / 0.2) * 100000
         let maxLNAarround = Math.floor(maxLNA / 500) * 500
         if (maxLNAarround > 10000) {
             return 10000
@@ -47,8 +53,16 @@ function CartShipping() {
         }
     }
 
+    function GoToGame() {
+        navigate("/home");
+    }
+
     return (
-        loading ? (
+        !loading ? (
+            <div className='loading'>
+                <img alt='MetaMask_Fox' src={Metamask_icon} />
+            </div>
+        ) : (
             <div className='cartShipping'>
                 <div className='card'>
                     <label className='title'>Acheter Jeton</label>
@@ -63,15 +77,22 @@ function CartShipping() {
                         max={getMax(info.eth)}
                     />
                     <div className='info'>
-
-                        {value}
+                        <span>Achat : {value} LNA</span>
+                        <span>Prix : {value / 100000} ETH</span>
                     </div>
-                    <button>
-                        <label>Acheter</label>
-                    </button>
+                    <div className='buttons'>
+                        <button onClick={GoToGame} style={{ backgroundColor: "#FF2D2D" }} >
+                            <span >Annuler</span>
+                            <FontAwesomeIcon icon={faXmark} />
+                        </button>
+                        <button style={{ backgroundColor: "orange" }}>
+                            <span>Acheter</span>
+                            <FontAwesomeIcon icon={faCartShopping} />
+                        </button>
+                    </div>
                 </div>
             </div>
-        ) : (<CircularProgress />)
+        )
     )
 }
 

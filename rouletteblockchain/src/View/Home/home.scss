@@ -21,6 +21,17 @@
             gap: 10px;
 
             margin: 20px;
+
+            .icon {
+                color: white;
+                margin-left: 20px;
+                scale: 1.6;
+
+                &:hover {
+                    color: black;
+                    cursor: pointer;
+                }
+            }
         }
 
         .placements {
@@ -31,6 +42,7 @@
             border: 1px solid white;
             border-radius: 10px;
             background-color: #FFFFFF40;
+            color: white;
 
             .placement {
                 display: flex;
