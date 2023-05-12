@@ -7,7 +7,10 @@ import Web3 from 'web3';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartShopping, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
+import ContratABI from "../../utils/ContratABI.json";
 
+const contractAddress = '0xfde77f0De25D6254657b01672e348CDFB7b3d83D';
+const contractAbi = ContratABI;
 function CartShipping() {
     const [loading, setLoading] = useState(false);
     const [value, setValue] = useState(false);
@@ -30,8 +33,11 @@ function CartShipping() {
         const address = accounts[0];
         const balanceInWei = await window.web3.eth.getBalance(address);
         const balanceInEth = window.web3.utils.fromWei(balanceInWei, 'ether');
+        const contract = new window.web3.eth.Contract(contractAbi, contractAddress);
         setInfo({
-            eth: balanceInEth
+            address: address,
+            eth: balanceInEth,
+            contract: contract
         })
         setLoading(true)
     }
@@ -55,6 +61,34 @@ function CartShipping() {
 
     function GoToGame() {
         navigate("/home");
+    }
+
+    function BuyToken() {
+        // Envoyer une transaction au contrat avec un montant spécifique
+        const amountToSend = window.web3.utils.toWei("1", 'finney');
+        const transactionParameters = {
+            from: info.address,
+            to: contractAddress,
+            value: amountToSend,
+        };
+
+        info.contract.methods.buyTokens().send(transactionParameters)
+            .on('transactionHash', (hash) => {
+                // La transaction a été envoyée avec succès
+                console.log('1')
+                console.log(hash)
+            })
+            .on('confirmation', (confirmationNumber, receipt) => {
+                // La transaction a été confirmée
+                console.log('2')
+                console.log(confirmationNumber)
+                console.log(receipt)
+            })
+            .on('error', (error) => {
+                // Une erreur s'est produite lors de l'envoi de la transaction
+                console.log('3')
+                console.log(error)
+            });
     }
 
     return (
@@ -85,7 +119,7 @@ function CartShipping() {
                             <span >Annuler</span>
                             <FontAwesomeIcon icon={faXmark} />
                         </button>
-                        <button style={{ backgroundColor: "orange" }}>
+                        <button onClick={BuyToken} style={{ backgroundColor: "orange" }}>
                             <span>Acheter</span>
                             <FontAwesomeIcon icon={faCartShopping} />
                         </button>

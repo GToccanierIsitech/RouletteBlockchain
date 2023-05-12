@@ -16,9 +16,8 @@ import { useNavigate } from "react-router-dom";
 const tokenAddress = "0x12aa00da1B8c2f1Aed531BDb8aBA4464953707A8"; // Adresse du contrat du token ERC-20
 const tokenAbi = TokenABI; // Interface de contrat du token ERC-20
 
-const contractAddress = '0x24Ebedf75b3e86766b4f66591cC1918D84ab3bd7';
+const contractAddress = '0xfde77f0De25D6254657b01672e348CDFB7b3d83D';
 const contractAbi = ContratABI;
-const contract = new web3.eth.Contract(contractAbi, contractAddress);
 
 function Home() {
     const [loading, setLoading] = useState(false);
@@ -41,10 +40,12 @@ function Home() {
         const address = accounts[0];
         const tokenContract = new window.web3.eth.Contract(tokenAbi, tokenAddress);
         const tokenBalance = await tokenContract.methods.balanceOf(address).call();
+        const contract = new window.web3.eth.Contract(contractAbi, contractAddress);
         console.log(tokenBalance)
         console.log(window.web3)
         setInfo({
-            balance: window.web3.utils.fromWei(tokenBalance, "ether")
+            balance: window.web3.utils.fromWei(tokenBalance, "ether"),
+            contract: contract
         })
         setLoading(true)
     }
