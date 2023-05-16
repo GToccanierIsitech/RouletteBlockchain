@@ -11,12 +11,11 @@ import useAdvancedState from "../../utils/CustomHooks/useAdvencedState";
 import Web3 from "web3";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
-import { useNavigate } from "react-router-dom";
 
 const tokenAddress = "0x12aa00da1B8c2f1Aed531BDb8aBA4464953707A8"; // Adresse du contrat du token ERC-20
 const tokenAbi = TokenABI; // Interface de contrat du token ERC-20
 
-const contractAddress = '0xfde77f0De25D6254657b01672e348CDFB7b3d83D';
+const contractAddress = '0x44FE1c5d1914F6223Ee7b40e34673EC38924C71D';
 const contractAbi = ContratABI;
 
 function Home() {
@@ -41,8 +40,6 @@ function Home() {
         const tokenContract = new window.web3.eth.Contract(tokenAbi, tokenAddress);
         const tokenBalance = await tokenContract.methods.balanceOf(address).call();
         const contract = new window.web3.eth.Contract(contractAbi, contractAddress);
-        console.log(tokenBalance)
-        console.log(window.web3)
         setInfo({
             balance: window.web3.utils.fromWei(tokenBalance, "ether"),
             contract: contract

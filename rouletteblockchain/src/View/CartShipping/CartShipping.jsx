@@ -9,8 +9,9 @@ import { faCartShopping, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
 import ContratABI from "../../utils/ContratABI.json";
 
-const contractAddress = '0xfde77f0De25D6254657b01672e348CDFB7b3d83D';
+const contractAddress = '0x44FE1c5d1914F6223Ee7b40e34673EC38924C71D';
 const contractAbi = ContratABI;
+
 function CartShipping() {
     const [loading, setLoading] = useState(false);
     const [value, setValue] = useState(false);
@@ -64,13 +65,15 @@ function CartShipping() {
     }
 
     function BuyToken() {
+        console.log((value / 100).toString())
         // Envoyer une transaction au contrat avec un montant spécifique
-        const amountToSend = window.web3.utils.toWei("1", 'finney');
+        const amountToSend = window.web3.utils.toWei((value / 100).toString(), 'finney');
         const transactionParameters = {
             from: info.address,
             to: contractAddress,
             value: amountToSend,
         };
+        console.log(transactionParameters)
 
         info.contract.methods.buyTokens().send(transactionParameters)
             .on('transactionHash', (hash) => {
