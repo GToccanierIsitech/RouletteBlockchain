@@ -5,7 +5,7 @@ import { CircularProgress, Slider } from '@material-ui/core'
 import { useEffect, useState } from 'react';
 import Web3 from 'web3';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCartShopping, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faCartShopping, faCheck, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
 import ContratABI from "../../utils/ContratABI.json";
 
@@ -15,6 +15,7 @@ const contractAbi = ContratABI;
 function CartShipping() {
     const [loading, setLoading] = useState(false);
     const [value, setValue] = useState(false);
+    const [paymentStep, setPaymentStep] = useState(0);
 
     const [info, setInfo] = useAdvancedState({
         balance: ''
@@ -65,6 +66,7 @@ function CartShipping() {
     }
 
     function BuyToken() {
+        setPaymentStep(1)
         console.log((value / 100).toString())
         // Envoyer une transaction au contrat avec un montant spécifique
         const amountToSend = window.web3.utils.toWei((value / 100).toString(), 'finney');
@@ -78,18 +80,17 @@ function CartShipping() {
         info.contract.methods.buyTokens().send(transactionParameters)
             .on('transactionHash', (hash) => {
                 // La transaction a été envoyée avec succès
-                console.log('1')
                 console.log(hash)
             })
             .on('confirmation', (confirmationNumber, receipt) => {
                 // La transaction a été confirmée
-                console.log('2')
+                setPaymentStep(2)
                 console.log(confirmationNumber)
                 console.log(receipt)
             })
             .on('error', (error) => {
                 // Une erreur s'est produite lors de l'envoi de la transaction
-                console.log('3')
+                setPaymentStep(3)
                 console.log(error)
             });
     }
@@ -118,6 +119,22 @@ function CartShipping() {
                         <span>Prix : {value / 100000} ETH</span>
                     </div>
                     <div className='buttons'>
+                        {paymentStep === 1 ? (
+                            <div className='waitingMessage' style={{ color: "Blue" }}>
+                                <CircularProgress style={{ scale: "0.5" }} />
+                                <label>Transaction en cours</label>
+                            </div>
+                        ) : paymentStep === 2 ? (
+                            <div className='waitingMessage' style={{ color: "green" }}>
+                                <FontAwesomeIcon icon={faCheck} />
+                                <label>Transaction effectuée</label>
+                            </div>
+                        ) : paymentStep === 3 ? (
+                            <div className='waitingMessage' style={{ color: "red" }}>
+                                <FontAwesomeIcon icon={faXmark} />
+                                <label>Transaction échouée</label>
+                            </div>
+                        ) : null}
                         <button onClick={GoToGame} style={{ backgroundColor: "#FF2D2D" }} >
                             <span >Annuler</span>
                             <FontAwesomeIcon icon={faXmark} />
