@@ -41,6 +41,7 @@ function Home() {
         const tokenBalance = await tokenContract.methods.balanceOf(address).call();
         const contract = new window.web3.eth.Contract(contractAbi, contractAddress);
         setInfo({
+            address: address,
             balance: window.web3.utils.fromWei(tokenBalance, "ether"),
             contract: contract
         })
@@ -122,6 +123,35 @@ function Home() {
         setPlacements([])
     }
 
+    function StartGame() {
+        console.log(placements)
+        const transactionParameters = {
+            from: info.address,
+            to: contractAddress
+        };
+        console.log(info.address)
+        console.log(placements)
+        let bets = []
+        placements.forEach(placement => {
+            bets.push([placement.value, placement.amount])
+        });
+        console.log(bets)
+        info.contract.methods.spinWheel(info.address, bets).send(transactionParameters)
+            .on('transactionHash', (hash) => {
+                // La transaction a été envoyée avec succès
+                console.log(hash)
+            })
+            .on('confirmation', (confirmationNumber, receipt) => {
+                // La transaction a été confirmée
+                console.log(confirmationNumber)
+                console.log(receipt)
+            })
+            .on('error', (error) => {
+                // Une erreur s'est produite lors de l'envoi de la transaction
+                console.log(error)
+            });
+    }
+
     return (
         !loading ? (
             <div className='loading'>
@@ -178,7 +208,7 @@ function Home() {
                                     Placement :
                                     {showPlacement(placements)}
                                 </div>
-                                <button className="buttonstart">
+                                <button className="buttonstart" onClick={StartGame}>
                                     Lancer
                                 </button>
                             </>
